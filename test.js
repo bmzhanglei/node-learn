@@ -111,19 +111,17 @@ function getChild(pids,index){
     if(pids.length){
        let one = trees[index].filter(res=>res.id===pids[0]) 
 
-       
-       if(pids[1]){
-          const two = one.children.filter(res=>res.id===pids[1])
-           if(pids[2]){
-              const three = two.children.filter(res=>res.id===pids[2])
-           }else{
-               return two.children
-           }
-       }else{
-           return one.children
-       }
-
-
+       return  getChilds(pids,one)
+    //    if(pids[1]){
+    //       const two = one.children.filter(res=>res.id===pids[1])
+    //        if(pids[2]){
+    //           const three = two.children.filter(res=>res.id===pids[2])
+    //        }else{
+    //            return two.children
+    //        }
+    //    }else{
+    //        return one.children
+    //    }
 
     }else{
        return trees[index].children
