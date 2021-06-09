@@ -131,6 +131,18 @@ function getChild(pids,index){
 }
 
 
+function getChilds(pids,one){
+    let child = one.children
+    for(let i=1;i<pids.length;i++){       
+        if(pids[i]){
+           one = child.filter(res=>res.id===pids[i])
+        }else{
+            return one.children
+        }
+    }
+}
+
+
 
 trees.filter(res=>res.pids.length)
 
