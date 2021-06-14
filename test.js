@@ -112,18 +112,21 @@ const arr = [{
     },
 ]
 
-
 let obj = {}
+let pidAll  = []
+let getPidChild = {}
 arr.forEach(item => {
-    obj[item.id + "---" + (item.pid ? item.pid : "0")] = item
+    obj[item.id ] = item //+ "---" + (item.pid ? item.pid : "0")
     if (obj.pid === "") {
         obj[item.id].pid = "0"
     }
+    if(item.pid===""){
+        pidAll.push("0")
+    }else{
+        pidAll.push(item.pid)
+    }    
 })
-
-
-
-
+pidAll = [...new Set(pidAll)]
 
 function getParentData(ids = [], item) {
     let {
@@ -146,29 +149,60 @@ arr.forEach(item => {
     item.pids = getParentData([], item)
 })
 
+//获取所有父的子元素
+arr.forEach(item => {
+    if(pidAll.includes(item.pid)){
+        if(getPidChild[item.pid]){
+            getPidChild[item.pid].push(item)
+        }else{
+            getPidChild[item.pid] = [item]
+        } 
+    }
+})
+
+console.log(JSON.stringify(getPidChild,null,2) )
+
+console.log('----------------')
+
 //objs 添加 pids
 for (let i in obj) {
-    obj[i].pids = getParentData([], obj[i])
+    obj[i].pids = getParentData([], obj[i]) 
 }
 
-console.log(obj)
 
-function arrayToTree(arr, pid) {
-    let temp = [];
-    let treeArr = arr;
-    treeArr.forEach((item, index) => {
-        if (item.pid == pid) {
-            const treedata = arrayToTree(treeArr, treeArr[index].id)
-            if (treedata.length > 0) {
-                treeArr[index].children = treedata;
-            }
-            temp.push(treeArr[index]);
-        }
-    });
-    return temp;
+//第一种方案（效率高）
+function arrToTree(pdata=[],pid){
+    pdata.forEach(item=>{     
+        const children = getPidChild[item.id]
+        if(children && children.length){
+            item.children = children
+            arrToTree(item.children)
+        } 
+    })
+    return pdata
 }
 
-console.log(JSON.stringify(arrayToTree(arr, "0"), null, 2));
+const alldata = arrToTree(getPidChild["0"])
+
+console.log(JSON.stringify(alldata,null,2)) 
+
+//第二种方案
+// function arrayToTree(arr, pid) {
+//     let temp = [];
+//     let treeArr = arr;
+//     treeArr.forEach((item, index) => {
+//         if (item.pid == pid) {
+//             const treedata = arrayToTree(treeArr, treeArr[index].id)
+//             if (treedata.length > 0) {
+//                 treeArr[index].children = treedata;
+//             }
+//             temp.push(treeArr[index]);
+//         }
+//     });
+//     return temp;
+// }
+
+// console.log(JSON.stringify(arrayToTree(arr, "0"), null, 2));
 
 // function getChild(pids,index){
 //     if(pids.length){
