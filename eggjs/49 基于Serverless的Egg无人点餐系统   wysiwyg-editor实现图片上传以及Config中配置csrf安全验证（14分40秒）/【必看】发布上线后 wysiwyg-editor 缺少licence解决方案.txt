@@ -1,0 +1,6 @@
+
+wysiwyg-editor 是一个开源的富文本编辑器，但是正是上线后需要licence ，正式上线的编辑器会提示缺少licence，一行红色显示在最顶上，很显眼。
+
+解决办法：
+
+http://bbs.itying.com/topic/6073c84153e6780b2c6cb933

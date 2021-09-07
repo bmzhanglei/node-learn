@@ -1,0 +1,3 @@
+如果您使用的是node-canvas模块的话请换为 html5 canvas
+
+详情参考：56讲使用qr-image生成桌号二维码以及使用 html5 Canvas加水印合成图片二维码（10分46秒）
