@@ -1,0 +1,87 @@
+
+-- 1、查找文章分类下面的所有文章
+
+		-- SELECT * FROM article where cate_id=1
+
+		-- SELECT * FROM article 
+
+-- 2、查找文章的时候显示文章的分类  笛卡尔积连接
+
+-- SELECT article.id as id ,article.title as title ,article.state as state, article_cate.title as cate FROM article,article_cate WHERE article.cate_id=article_cate.id
+-- 
+-- 
+
+-- 3、查找文章的时候显示文章的分类 内连接  INNER JOIN   ON 
+
+-- SELECT article.id as id ,article.title as title ,article.state as state, article_cate.title as cate FROM article INNER JOIN article_cate ON  article.cate_id=article_cate.id
+-- 
+
+
+--  4、查询张三同学 选修了那些课程   id为1的学生选修了那些课程
+
+-- 第一种方法
+
+	-- 1、查询张三选修的课程id
+
+	-- SELECT lesson_id from lesson_student where student_id=1
+
+	-- 	2、查询出课程id对应的课程
+
+	-- SELECT * from lesson WHERE id in (SELECT lesson_id from lesson_student where student_id=1)
+	
+	
+-- 第二种方法 笛卡尔积连接
+
+-- 	
+-- 	SELECT lesson.id as id,lesson.`name` as `name` FROM lesson_student,lesson WHERE lesson.id=lesson_student.lesson_id AND lesson_student.student_id=1
+--  
+ 
+ 	
+-- 第三种方法内连接  INNER JOIN   ON 
+
+-- SELECT lesson.id as id,lesson.`name` as `name` FROM  lesson INNER JOIN lesson_student ON lesson.id=lesson_student.lesson_id AND lesson_student.student_id=2
+-- 
+
+
+
+--  5、查询课程被那些学生选修了   Java程序设计   id 2
+
+
+
+-- 第一种方法
+
+	-- 1、查询 那些学生选修了Java程序设计 
+
+-- 	SELECT student_id from lesson_student where lesson_id=2
+
+	-- 	2、查询出课程id对应的课程
+
+-- 	SELECT * from student WHERE id in (SELECT student_id from lesson_student where lesson_id=2)
+
+
+-- 第二种方法 笛卡尔积连接
+
+-- 
+-- 	SELECT student.id as id,student.`name` as `name`,student.number as num from student,lesson_student where student.id=lesson_student.student_id AND lesson_student.lesson_id=2
+-- 第三种方法内连接  INNER JOIN   ON 
+
+-- SELECT student.id as id,student.`name` as `name`,student.number as num from student INNER JOIN lesson_student on student.id=lesson_student.student_id AND lesson_student.lesson_id=2
+-- 
+
+
+
+-- 内连接INNER JOIN   ON 
+
+
+-- SELECT * FROM  lesson INNER JOIN lesson_student ON lesson.id=lesson_student.lesson_id AND lesson_student.student_id=2
+
+
+-- 左连接LEFT JOIN   ON 
+
+
+-- SELECT * FROM  lesson LEFT JOIN lesson_student ON lesson.id=lesson_student.lesson_id AND lesson_student.student_id=2
+
+
+-- 右连接RIGHT JOIN   ON 
+
+-- SELECT * FROM  lesson RIGHT JOIN lesson_student ON lesson.id=lesson_student.lesson_id AND lesson_student.student_id=2

@@ -19,6 +19,7 @@
 # yarn 源
 https://zhuanlan.zhihu.com/p/35856841
 
+npm view express versions  //查看所有历史版本
 # express template
 - ejs
 - pug

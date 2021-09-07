@@ -58,3 +58,60 @@
 // })
 
 // event.emit('play', '我和我的祖国')
+
+// const url = require('url')
+// const querystring = require('querystring')
+// const urlString = 'https://www.baidu.com:443/ad/index.html?id=8&name=mouse#tag=110'
+// const parsedStr = url.parse(urlString)
+// console.log(parsedStr.query)
+// const q = querystring.parse(parsedStr.query) 
+// console.log(querystring.stringify(q))
+// const https = require('https')
+// https.get('https://maoyan.com/films/644174', (res) => {
+//   let str = ''
+//   res.on('data', (chunk) => {
+//     str += chunk
+//   })
+//   res.on('end', () => {
+//     console.log(str)
+//   })
+// })
+
+// const logger = require('../../utils/log')
+const querystring = require('querystring')
+
+const http = require('http')
+const https = require('https')
+
+const server = http.createServer((request, response) => {
+  // const url = request.url
+  // logger.debug(response)
+  // debugger;
+  // let data = ''
+  // request.on('data', (chunk) => {
+  //   data += chunk
+  // })
+  // request.on('end', () => {
+    
+  // })
+
+  https.get('https://maoyan.com/films/644174', (result) => {
+    let data = ''
+    result.on('data', (chunk) => {
+      data += chunk
+    })
+    result.on('end', () => {
+      response.writeHead(200, {
+        // 'content-type': 'application/json;charset=utf-8'
+        'content-type': 'html/plain'
+      })
+      response.write(data)
+      response.end()
+    })
+  })
+
+})
+
+server.listen(8080, () => {
+  console.log('localhost:8080')
+})
